@@ -12,12 +12,16 @@ public class FortuneTellerFrame extends JFrame {
 
     public FortuneTellerFrame() {
         Dimension baseScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension applicationSize = new Dimension(baseScreenSize.width/3,baseScreenSize.height/3);
+        float applicationScaleFactor = 3f/4f;
+        Dimension applicationSize = new Dimension(
+                (int)(baseScreenSize.width * applicationScaleFactor),
+                (int)(baseScreenSize.height * applicationScaleFactor)
+        );
 
         super.setTitle("Fortune Teller");
         super.setSize(applicationSize.width, applicationSize.height);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.setLayout(new FlowLayout());
+        super.setLayout(new BorderLayout());
 
         SetUpTopPanel();
         SetUpMiddlePanel();
@@ -30,10 +34,10 @@ public class FortuneTellerFrame extends JFrame {
     private void SetUpTopPanel(){
         top = new JPanel();
         JLabel label = new JLabel("Fortune Teller");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
+        label.setFont(new Font("Arial", Font.BOLD, 65));
 
         Image icon = new ImageIcon(getClass().getResource("fortune.jpg")).getImage();
-        icon = icon.getScaledInstance(50,50,Image.SCALE_SMOOTH);
+        icon = icon.getScaledInstance(100,100,Image.SCALE_SMOOTH);
         JLabel imageHolder = new JLabel(new ImageIcon(icon));
 
         top.setLayout(new GridBagLayout());//display the image and text in column instead of row
@@ -43,32 +47,38 @@ public class FortuneTellerFrame extends JFrame {
 
         top.add(label,constraints);
         top.add(imageHolder,constraints);
-        super.add(top);
+        super.add(top, BorderLayout.PAGE_START);
     }
     private void SetUpMiddlePanel(){
         middle = new JPanel();
 
+        Font middleFont = new Font("SansSerif", Font.ITALIC, 20);
+        textArea.setFont(middleFont);
         JScrollPane scrollPane = new JScrollPane(textArea);//create scroll pane and add the text area to it
-        scrollPane.setPreferredSize(new Dimension(250,textArea.getFont().getSize()*10));
+        scrollPane.setPreferredSize(
+                new Dimension(
+                        middleFont.getSize()*20,
+                        middleFont.getSize()*10
+                )
+        );
         textArea.setEditable(false);
-        textArea.setFont(new Font("SansSerif", Font.ITALIC, 15));
 
         middle.add(scrollPane);
-        super.add(middle);
+        super.add(middle, BorderLayout.CENTER);
     }//FIXME: needs a font
     private void SetUpBottomPanel(){
         bottom = new JPanel();
 
         readButton.addActionListener(e -> textArea.append("\n" +GetRandomFortune()));
         quitButton.addActionListener(e -> System.exit(0));
-        Font bottomFont = new Font("Dialog", Font.BOLD, 10);
+        Font bottomFont = new Font("Dialog", Font.BOLD, 20);
 
         readButton.setFont(bottomFont);
         quitButton.setFont(bottomFont);
 
         bottom.add(readButton);
         bottom.add(quitButton);
-        super.add(bottom);
+        super.add(bottom, BorderLayout.PAGE_END);
     }//FIXME: needs a font
 
     private String GetRandomFortune(){

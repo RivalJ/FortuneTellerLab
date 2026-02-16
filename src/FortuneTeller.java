@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class FortuneTeller {
-    private FortuneTellerFrame frame;
+    public FortuneTellerFrame frame;
 
 
     void main(String[] args){

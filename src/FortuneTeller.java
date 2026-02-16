@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class FortuneTeller {
@@ -5,8 +6,6 @@ public class FortuneTeller {
 
 
     void main(String[] args){
-        frame = new FortuneTellerFrame();
-        frame.setVisible(true);
-
+        SwingUtilities.invokeLater(() -> frame = new FortuneTellerFrame());
     }
 }

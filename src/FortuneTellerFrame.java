@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class FortuneTellerFrame extends JFrame {
     private JPanel top, middle, bottom;
-    JTextArea textArea = new JTextArea(10,1);
+    JTextArea textArea = new JTextArea(20,50);
     JButton readButton = new JButton("Read My Fortune!");
     JButton quitButton = new JButton("Quit");
     ArrayList<String> fortunes = new ArrayList<>();
@@ -29,24 +29,22 @@ public class FortuneTellerFrame extends JFrame {
         CreateFortunes();
 
         super.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     private void SetUpTopPanel(){
         top = new JPanel();
         JLabel label = new JLabel("Fortune Teller");
-        label.setFont(new Font("Arial", Font.BOLD, 65));
+        label.setFont(new Font("Arial", Font.BOLD, 48));
 
         Image icon = new ImageIcon(getClass().getResource("fortune.jpg")).getImage();
         icon = icon.getScaledInstance(100,100,Image.SCALE_SMOOTH);
-        JLabel imageHolder = new JLabel(new ImageIcon(icon));
 
-        top.setLayout(new GridBagLayout());//display the image and text in column instead of row
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridy = GridBagConstraints.RELATIVE;
-        constraints.gridx = 0;
+        label.setIcon(new ImageIcon(icon));
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
 
-        top.add(label,constraints);
-        top.add(imageHolder,constraints);
+        top.add(label);
         super.add(top, BorderLayout.PAGE_START);
     }
     private void SetUpMiddlePanel(){
@@ -55,15 +53,16 @@ public class FortuneTellerFrame extends JFrame {
         Font middleFont = new Font("SansSerif", Font.ITALIC, 20);
         textArea.setFont(middleFont);
         JScrollPane scrollPane = new JScrollPane(textArea);//create scroll pane and add the text area to it
-        scrollPane.setPreferredSize(
-                new Dimension(
-                        middleFont.getSize()*20,
-                        middleFont.getSize()*10
-                )
-        );
+//        scrollPane.setPreferredSize(
+//                new Dimension(
+//                        middleFont.getSize()*20,
+//                        middleFont.getSize()*10
+//                )
+//        );
         textArea.setEditable(false);
 
         middle.add(scrollPane);
+
         super.add(middle, BorderLayout.CENTER);
     }//FIXME: needs a font
     private void SetUpBottomPanel(){
